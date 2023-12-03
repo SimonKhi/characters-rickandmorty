@@ -6,11 +6,18 @@ import './App.css';
 function App() {
   const [characters, setCharacters] = useState(null)
 
-  const reqApi = async () => {
-    const api = await fetch('https://rickandmortyapi.com/api/character');
-    const caracterApi = await api.json();
+  const reqApi = async() => {
+    let counter = 1;
+    let data = [];
 
-    setCharacters(caracterApi.results);
+    for(counter; counter <= 45; counter++){
+      const link = 'https://rickandmortyapi.com/api/character/' + counter.toString();
+      const api = await fetch(link);
+      const caracterApi = await api.json();
+      data.push(caracterApi);
+    }
+
+    setCharacters(data);
   }
   
   return (
@@ -18,7 +25,7 @@ function App() {
       <header className="App-header">
         <h1 className='title'>Rick & Morty</h1>
         {characters ? (
-          <Characters characters = {characters} setCharacters={setCharacters}/>
+          <Characters characters={characters} setCharacters={setCharacters} />
         ) : (
           <>
             <img src={imagenRickMorty} alt='Rick & Morty' className='img-home'></img>
